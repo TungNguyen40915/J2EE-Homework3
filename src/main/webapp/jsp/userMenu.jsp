@@ -12,8 +12,8 @@
 </head>
 <body>
 <h1>User information</h1>
-<a href="/ViewUserServlet">Personal Information</a>
+<a href="ViewUserServlet">Personal Information</a>
 <br/>
-<a href="/LogoutServlet">Logout</a>
+<a href="LogoutServlet">Logout</a>
 </body>
 </html>

@@ -101,13 +101,12 @@ public class UserBO {
         return userDTOList;
     }
 
-    public void doDeleteUser(String[] usernameList){
+    public List<UserDTO> doSearchUser(String username, String role, String firstname, String lastname, String sex, String address, String email, String mobilephone) {
+        List<UserDTO> userDTOList = new ArrayList<UserDTO>();
         UserMapper mapper = null;
         try {
             mapper = new UserMapper();
-            for (String s: usernameList) {
-                mapper.deleteUser(s);
-            }
+            userDTOList = mapper.searchUser(username,role,firstname,lastname,sex,address,email,mobilephone);
         } catch (Exception e) {
             Logger.getLogger(UserBO.class.getName()).log(Level.SEVERE, null, e.toString());
         } finally {
@@ -117,6 +116,7 @@ public class UserBO {
                 Logger.getLogger(UserBO.class.getName()).log(Level.SEVERE, null, e.toString());
             }
         }
+        return userDTOList;
     }
 
     public void doUpdateUserInfo(String username, String firstname, String lastname, String sex, String address, String email, String mobilephone){
@@ -141,6 +141,24 @@ public class UserBO {
         try {
             mapper = new UserMapper();
             mapper.updateUserPassword(username,password);
+        } catch (Exception e) {
+            Logger.getLogger(UserBO.class.getName()).log(Level.SEVERE, null, e.toString());
+        } finally {
+            try {
+                mapper.closeConnection();
+            } catch (Exception e) {
+                Logger.getLogger(UserBO.class.getName()).log(Level.SEVERE, null, e.toString());
+            }
+        }
+    }
+
+    public void doDeleteUser(String[] usernameList){
+        UserMapper mapper = null;
+        try {
+            mapper = new UserMapper();
+            for (String s: usernameList) {
+                mapper.deleteUser(s);
+            }
         } catch (Exception e) {
             Logger.getLogger(UserBO.class.getName()).log(Level.SEVERE, null, e.toString());
         } finally {

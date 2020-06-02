@@ -135,6 +135,67 @@ public class UserMapper extends MapperDB{
         }
     }
 
+    public List<UserDTO> searchUser(String username, String role, String firstname, String lastname, String sex, String address, String email, String mobilephone){
+        List<UserDTO> userDTOList = new ArrayList<UserDTO>();
+        try{
+            Statement stmt = getConnection().createStatement();
+            String query = "SELECT * FROM users " + handleSearchQuery(username,role,firstname,lastname,sex,address,email,mobilephone);
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs!=null && rs.next()){
+                userDTOList.add(extractUserFromResultSet(rs));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return userDTOList;
+    }
+
+    private String handleSearchQuery(String username, String role, String firstname, String lastname, String sex, String address, String email, String mobilephone){
+        String query = "";
+        List<String> statement = new ArrayList<String>();
+
+        if (!("".equals(username) &&  "".equals(role) &&  "".equals(firstname) &&  "".equals(lastname)
+                &&  "".equals(sex) &&  "".equals(address) &&  "".equals(email) &&  "".equals(mobilephone)
+        )){
+
+            if(!"".equals(username)){
+                statement.add("username LIKE '%" + username + "%'");
+            }
+            if(!"".equals(firstname)){
+                statement.add("firstname LIKE '%" + firstname + "%'");
+            }
+            if(!"".equals(lastname)){
+                statement.add("lastname LIKE '%" + lastname + "%'");
+            }
+            if(!"".equals(sex)){
+                statement.add("sex LIKE '%" + sex + "%'");
+            }
+            if(!"".equals(address)){
+                statement.add("address LIKE '%" + address + "%'");
+            }
+            if(!"".equals(email)){
+                statement.add("email LIKE '%" + email + "%'");
+            }
+            if(!"".equals(mobilephone)){
+                statement.add("mobilephone LIKE '%" + mobilephone + "%'");
+            }
+            if(!"".equals(role)){
+                statement.add("groupid = " + role);
+            }
+
+            query = query.concat("  WHERE ");
+            query = query.concat(statement.get(0));
+            for(int i = 1; i< statement.size(); i++){
+                query = query.concat("  AND  ");
+                query = query.concat(statement.get(i));
+            }
+        }
+
+        return query;
+    }
+
+
+
     private UserDTO extractUserFromResultSet(ResultSet rs) throws SQLException {
         UserDTO userDTO = new UserDTO();
         userDTO.setAddress(rs.getString("address"));

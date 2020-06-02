@@ -11,6 +11,9 @@
     <title>Hello User</title>
 </head>
 <body>
-
+<h1>User information</h1>
+<a href="ViewUserServlet">Personal Information</a>
+<br/>
+<a href="LogoutServlet">Logout</a>
 </body>
 </html>

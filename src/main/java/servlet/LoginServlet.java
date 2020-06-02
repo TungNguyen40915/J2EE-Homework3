@@ -50,7 +50,7 @@ public class LoginServlet extends HttpServlet {
        }
        else { //user
            AppUtils.storeLoginedUser(request.getSession(), userDTO);
-           response.sendRedirect(request.getContextPath() + "/GoAdminFunctionServlet");
+           response.sendRedirect(request.getContextPath() + "/GoUserFunctionServlet");
        }
 
 

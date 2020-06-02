@@ -15,7 +15,7 @@
 <h1>List Users</h1>
 <a href="GoAdminFunctionServlet">Main menu</a>
 <br/>
-<a href="LoginServlet">Logout</a>
+<a href="LogoutServlet">Logout</a>
 <br/>
 
 

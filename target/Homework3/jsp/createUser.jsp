@@ -15,7 +15,7 @@
 <h1>Create New User</h1>
 <a href="GoAdminFunctionServlet">Main menu</a>
 <br/>
-<a href="LoginServlet">Logout</a>
+<a href="LogoutServlet">Logout</a>
 <br/>
 
 <form method="POST" action="./GoCreateUserServlet">
