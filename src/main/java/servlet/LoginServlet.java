@@ -2,6 +2,7 @@ package servlet;
 
 import bo.UserBO;
 import dto.UserDTO;
+import utility.AppUtils;
 import utility.ApplicationConst;
 
 import javax.servlet.RequestDispatcher;
@@ -44,9 +45,11 @@ public class LoginServlet extends HttpServlet {
            dispatcher.forward(request, response);
        }
        else if (userDTO.getGroupId() == 1){ //admin
+           AppUtils.storeLoginedUser(request.getSession(), userDTO);
            response.sendRedirect(request.getContextPath() + "/GoAdminFunctionServlet");
        }
        else { //user
+           AppUtils.storeLoginedUser(request.getSession(), userDTO);
            response.sendRedirect(request.getContextPath() + "/GoAdminFunctionServlet");
        }
 
