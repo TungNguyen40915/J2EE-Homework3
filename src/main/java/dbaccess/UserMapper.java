@@ -73,6 +73,41 @@ public class UserMapper extends MapperDB{
         return false;
     }
 
+    public void updateUserInfo(UserDTO userDTO){
+        String SQL_INSERT = "UPDATE users set firstname=?,lastname=?,sex=?,address=?,email=?,mobilephone=? where username=?";
+        try{
+            PreparedStatement preparedStatement = getConnection().prepareStatement(SQL_INSERT);
+            preparedStatement.setString(1, userDTO.getFirstName());
+            preparedStatement.setString(2, userDTO.getLastName());
+            preparedStatement.setString(3, userDTO.getSex());
+            preparedStatement.setString(4, userDTO.getAddress());
+            preparedStatement.setString(5, userDTO.getEmail());
+            preparedStatement.setString(6, userDTO.getMobilePhone());
+            preparedStatement.setString(7, userDTO.getUsername());
+
+            int row = preparedStatement.executeUpdate();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public void updateUserPassword(String username, String password){
+        String SQL_INSERT = "UPDATE users set password=? where username=?";
+        try{
+            PreparedStatement preparedStatement = getConnection().prepareStatement(SQL_INSERT);
+            preparedStatement.setString(1, password);
+            preparedStatement.setString(2, username);
+
+            int row = preparedStatement.executeUpdate();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
     public List<UserDTO> getAllUser(){
         List<UserDTO> userDTOList = new ArrayList<UserDTO>();
         try{

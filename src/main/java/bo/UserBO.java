@@ -118,4 +118,37 @@ public class UserBO {
             }
         }
     }
+
+    public void doUpdateUserInfo(String username, String firstname, String lastname, String sex, String address, String email, String mobilephone){
+        UserDTO userDTO = new UserDTO(username,"",firstname,lastname,sex,address,email,mobilephone,2);
+        UserMapper mapper = null;
+        try {
+            mapper = new UserMapper();
+            mapper.updateUserInfo(userDTO);
+        } catch (Exception e) {
+            Logger.getLogger(UserBO.class.getName()).log(Level.SEVERE, null, e.toString());
+        } finally {
+            try {
+                mapper.closeConnection();
+            } catch (Exception e) {
+                Logger.getLogger(UserBO.class.getName()).log(Level.SEVERE, null, e.toString());
+            }
+        }
+    }
+
+    public void doUpdateUserPassword(String username, String password){
+        UserMapper mapper = null;
+        try {
+            mapper = new UserMapper();
+            mapper.updateUserPassword(username,password);
+        } catch (Exception e) {
+            Logger.getLogger(UserBO.class.getName()).log(Level.SEVERE, null, e.toString());
+        } finally {
+            try {
+                mapper.closeConnection();
+            } catch (Exception e) {
+                Logger.getLogger(UserBO.class.getName()).log(Level.SEVERE, null, e.toString());
+            }
+        }
+    }
 }
