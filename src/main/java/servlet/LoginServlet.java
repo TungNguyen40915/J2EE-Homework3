@@ -1,6 +1,7 @@
 package servlet;
 
 import bo.UserBO;
+import dto.UserDTO;
 import utility.ApplicationConst;
 
 import javax.servlet.RequestDispatcher;
@@ -35,16 +36,18 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         UserBO userBO = new UserBO();
-        String role = userBO.doLogin(userName,password);
+        UserDTO userDTO = userBO.doLogin(userName,password);
 
-       if("".equals(role)){
+       if(userDTO == null){
            request.setAttribute("errorMessage", ApplicationConst.LOGIN_FAILED_ERROR_MESSAGE);
            RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/jsp/login.jsp");
            dispatcher.forward(request, response);
        }
-       else{
-           RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/index.jsp");
-           dispatcher.forward(request, response);
+       else if (userDTO.getGroupId() == 1){ //admin
+           response.sendRedirect(request.getContextPath() + "/GoAdminFunctionServlet");
+       }
+       else { //user
+           response.sendRedirect(request.getContextPath() + "/GoAdminFunctionServlet");
        }
 
 
