@@ -2,10 +2,7 @@ package dbaccess;
 
 import dto.UserDTO;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,6 +71,33 @@ public class UserMapper extends MapperDB{
         }
 
         return false;
+    }
+
+    public List<UserDTO> getAllUser(){
+        List<UserDTO> userDTOList = new ArrayList<UserDTO>();
+        try{
+            Statement stmt = getConnection().createStatement();
+            String query = "SELECT * FROM users";
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs!=null && rs.next()){
+                userDTOList.add(extractUserFromResultSet(rs));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return userDTOList;
+    }
+
+    public void deleteUser(String username){
+        String sql = "delete from users where username = '" + username + "'";
+
+        try {
+             Statement stmt = getConnection().createStatement();
+             stmt.executeUpdate(sql);
+             System.out.println("Record deleted successfully" + username + "\n");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private UserDTO extractUserFromResultSet(ResultSet rs) throws SQLException {

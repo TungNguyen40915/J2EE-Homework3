@@ -19,19 +19,6 @@ public class GoCreateUserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        request.setAttribute("errorMessage", "");
-        request.setAttribute("userName", "");
-        request.setAttribute("password", "");
-        request.setAttribute("confirmPassword", "");
-        request.setAttribute("firstname", "");
-        request.setAttribute("lastname", "");
-        request.setAttribute("sex", "");
-        request.setAttribute("address", "");
-        request.setAttribute("email", "");
-        request.setAttribute("mobilephone", "");
-        request.setAttribute("insertMessage", "");
-
         RequestDispatcher dispatcher
                 = this.getServletContext().getRequestDispatcher("/jsp/createUser.jsp");
 
@@ -71,16 +58,6 @@ public class GoCreateUserServlet extends HttpServlet {
             RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/jsp/createUser.jsp");
             dispatcher.forward(request, response);
         } else {
-            request.setAttribute("errorMessage", "");
-            request.setAttribute("userName", "");
-            request.setAttribute("password", "");
-            request.setAttribute("confirmPassword", "");
-            request.setAttribute("firstname", "");
-            request.setAttribute("lastname", "");
-            request.setAttribute("sex", "");
-            request.setAttribute("address", "");
-            request.setAttribute("email", "");
-            request.setAttribute("mobilephone", "");
 
             if (userBO.doCreateNewUser(userName, password, firstname, lastname, sex, address, email, mobilephone))
                 request.setAttribute("insertMessage", ApplicationConst.INSERT_USER_SUCCESS);

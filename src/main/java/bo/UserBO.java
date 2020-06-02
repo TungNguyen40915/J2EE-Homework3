@@ -82,4 +82,40 @@ public class UserBO {
         }
         return result;
     }
+
+    public List<UserDTO> doGetAllUser(){
+        List<UserDTO> userDTOList = new ArrayList<UserDTO>();
+        UserMapper mapper = null;
+        try {
+            mapper = new UserMapper();
+            userDTOList = mapper.getAllUser();
+        } catch (Exception e) {
+            Logger.getLogger(UserBO.class.getName()).log(Level.SEVERE, null, e.toString());
+        } finally {
+            try {
+                mapper.closeConnection();
+            } catch (Exception e) {
+                Logger.getLogger(UserBO.class.getName()).log(Level.SEVERE, null, e.toString());
+            }
+        }
+        return userDTOList;
+    }
+
+    public void doDeleteUser(String[] usernameList){
+        UserMapper mapper = null;
+        try {
+            mapper = new UserMapper();
+            for (String s: usernameList) {
+                mapper.deleteUser(s);
+            }
+        } catch (Exception e) {
+            Logger.getLogger(UserBO.class.getName()).log(Level.SEVERE, null, e.toString());
+        } finally {
+            try {
+                mapper.closeConnection();
+            } catch (Exception e) {
+                Logger.getLogger(UserBO.class.getName()).log(Level.SEVERE, null, e.toString());
+            }
+        }
+    }
 }
